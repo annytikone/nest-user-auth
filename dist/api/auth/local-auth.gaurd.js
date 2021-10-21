@@ -6,23 +6,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.LocalAuthGuard = void 0;
 const common_1 = require("@nestjs/common");
-const mongoose_1 = require("@nestjs/mongoose");
-const user_module_1 = require("./api/user/user.module");
-const auth_module_1 = require("./api/auth/auth.module");
-let AppModule = class AppModule {
+const passport_1 = require("@nestjs/passport");
+let LocalAuthGuard = class LocalAuthGuard extends (0, passport_1.AuthGuard)('local') {
+    handleRequest(err, user, info, context, status) {
+        if (err || !user) {
+            throw new common_1.HttpException(err.message, err.status);
+        }
+        return user;
+    }
 };
-AppModule = __decorate([
-    (0, common_1.Module)({
-        imports: [
-            mongoose_1.MongooseModule.forRoot('mongodb+srv://aniket:aniket@cluster0.bn6fu.mongodb.net/kinisRoleTest?retryWrites=true&w=majority'),
-            user_module_1.UserModule,
-            auth_module_1.AuthModule,
-        ],
-        controllers: [],
-        providers: [],
-    })
-], AppModule);
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+LocalAuthGuard = __decorate([
+    (0, common_1.Injectable)()
+], LocalAuthGuard);
+exports.LocalAuthGuard = LocalAuthGuard;
+//# sourceMappingURL=local-auth.gaurd.js.map

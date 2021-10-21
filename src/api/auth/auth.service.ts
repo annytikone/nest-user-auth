@@ -16,7 +16,7 @@ export class AuthService {
     @Inject(forwardRef(() => UserService))
     private UserService: UserService,
     private jwtService: JwtService
-  ) {}
+  ) { }
 
   async validateUser(email: string, pass: string): Promise<any> {
     const query = { email: email };
@@ -28,15 +28,9 @@ export class AuthService {
   }
 
   async generateJwtToken(user: any) {
-    console.log('user passing through', user);
     const payload = {
-      username: user.username,
-      facebookLoginId: user.facebookId,
-      googleLoginId: user.googleId,
-      email: user.email,
-      role: user.role,
+      email: user.email
     };
-    console.log('Payload of token:', payload);
     return {
       access_token: this.jwtService.sign(payload),
     };

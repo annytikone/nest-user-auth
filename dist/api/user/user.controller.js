@@ -28,7 +28,7 @@ let UserController = UserController_1 = class UserController {
             const query = { email: newUser.email };
             const isUser = await this.userService.findOne(query);
             if (isUser)
-                throw new common_2.BadRequestException();
+                throw new common_2.ConflictException('User Already Exist');
             const user = await this.userService.create(newUser);
             return user;
         }

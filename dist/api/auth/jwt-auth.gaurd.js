@@ -6,23 +6,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.JwtAuthGuard = void 0;
 const common_1 = require("@nestjs/common");
-const mongoose_1 = require("@nestjs/mongoose");
-const user_module_1 = require("./api/user/user.module");
-const auth_module_1 = require("./api/auth/auth.module");
-let AppModule = class AppModule {
+const passport_1 = require("@nestjs/passport");
+let JwtAuthGuard = class JwtAuthGuard extends (0, passport_1.AuthGuard)('jwt') {
 };
-AppModule = __decorate([
-    (0, common_1.Module)({
-        imports: [
-            mongoose_1.MongooseModule.forRoot('mongodb+srv://aniket:aniket@cluster0.bn6fu.mongodb.net/kinisRoleTest?retryWrites=true&w=majority'),
-            user_module_1.UserModule,
-            auth_module_1.AuthModule,
-        ],
-        controllers: [],
-        providers: [],
-    })
-], AppModule);
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+JwtAuthGuard = __decorate([
+    (0, common_1.Injectable)()
+], JwtAuthGuard);
+exports.JwtAuthGuard = JwtAuthGuard;
+//# sourceMappingURL=jwt-auth.gaurd.js.map

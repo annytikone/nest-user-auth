@@ -2,18 +2,14 @@ import {
   Controller,
   Post,
   Request,
-  Body,
+  Logger,
+  NotFoundException,
   UseGuards,
   Get,
-  Logger,
-  Res,
-  UploadedFile,
-  UseInterceptors,
-  Delete,
-  NotFoundException,
-  Param,
+
 } from '@nestjs/common';
-import { BadRequestException, ConflictException } from '@nestjs/common';
+import { ConflictException } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.gaurd';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -29,7 +25,7 @@ export class UserController {
     try {
       const query = { email: newUser.email };
       const isUser = await this.userService.findOne(query);
-      if (isUser) throw new BadRequestException();
+      if (isUser) throw new ConflictException('User Already Exist');
       const user = await this.userService.create(newUser);
       return user;
     } catch (err) {
@@ -37,4 +33,6 @@ export class UserController {
       throw err;
     }
   }
+
+
 }

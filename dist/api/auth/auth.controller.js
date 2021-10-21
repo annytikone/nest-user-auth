@@ -16,11 +16,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
-const user_service_1 = require("../user/user.service");
+const jwt_auth_gaurd_1 = require("./jwt-auth.gaurd");
+const local_auth_gaurd_1 = require("./local-auth.gaurd");
 let AuthController = AuthController_1 = class AuthController {
-    constructor(authService, UserService) {
+    constructor(authService) {
         this.authService = authService;
-        this.UserService = UserService;
         this.logger = new common_1.Logger(AuthController_1.name);
     }
     async login(req) {
@@ -31,19 +31,29 @@ let AuthController = AuthController_1 = class AuthController {
             throw error;
         }
     }
+    async getUser(req) {
+        return req.user;
+    }
 };
 __decorate([
     (0, common_1.Post)('login'),
+    (0, common_1.UseGuards)(local_auth_gaurd_1.LocalAuthGuard),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "login", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_gaurd_1.JwtAuthGuard),
+    (0, common_1.Get)('viewProfile'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "getUser", null);
 AuthController = AuthController_1 = __decorate([
     (0, common_1.Controller)('auth'),
-    __param(1, (0, common_1.Inject)((0, common_1.forwardRef)(() => user_service_1.UserService))),
-    __metadata("design:paramtypes", [auth_service_1.AuthService,
-        user_service_1.UserService])
+    __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthController);
 exports.AuthController = AuthController;
 //# sourceMappingURL=auth.controller.js.map

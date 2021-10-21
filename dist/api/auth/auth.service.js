@@ -33,15 +33,9 @@ let AuthService = class AuthService {
         return user;
     }
     async generateJwtToken(user) {
-        console.log('user passing through', user);
         const payload = {
-            username: user.username,
-            facebookLoginId: user.facebookId,
-            googleLoginId: user.googleId,
-            email: user.email,
-            role: user.role,
+            email: user.email
         };
-        console.log('Payload of token:', payload);
         return {
             access_token: this.jwtService.sign(payload),
         };
