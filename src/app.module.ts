@@ -5,8 +5,7 @@ import { AuthModule } from './api/auth/auth.module';
 
 @Module({
   imports: [
-    // MongooseModule.forRoot('mongodb:localhost:27017'),
-    MongooseModule.forRoot('mongodb+srv://aniket:aniket@cluster0.bn6fu.mongodb.net/kinisRoleTest?retryWrites=true&w=majority'),
+    MongooseModule.forRoot('mongodb:localhost:27017'),
     UserModule,
     AuthModule,
   ],
